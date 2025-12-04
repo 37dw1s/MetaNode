@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"sort"
 	"strconv"
 	"strings"
@@ -134,5 +135,5 @@ func twoSum(nums []int, target int) []int {
 }
 
 func main() {
-
+	fmt.Println("test")
 }
