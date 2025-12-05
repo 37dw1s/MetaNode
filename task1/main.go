@@ -135,5 +135,5 @@ func twoSum(nums []int, target int) []int {
 }
 
 func main() {
-	fmt.Println("test")
+	fmt.Println("tsk1")
 }
