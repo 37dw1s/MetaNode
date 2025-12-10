@@ -1,29 +1,52 @@
 package main
 
-import (
-	"fmt"
-	"time"
-)
+import "fmt"
 
-/*
-*
-题目 ：编写一个程序，使用通道实现两个协程之间的通信。一个协程生成从1到10的整数，并将这些整数发送到通道中，另一个协程从通道中接收这些整数并打印出来。
-考察点 ：通道的基本使用、协程间通信。
-*/
+type Custom struct {
+	i int
+}
+
+var carr [5]*Custom = [5]*Custom{
+	{6},
+	{7},
+	{8},
+	{9},
+	{10},
+}
+
 func main() {
-	ch := make(chan int)
+	a := [5]int{5, 4, 3, 2, 1}
+	fmt.Println("before all, a = ", a)
+	for i := range carr {
+		fmt.Printf("in main func, carr[%d] = %p, value = %v \n", i, &carr[i], *carr[i])
+	}
+	printFuncParamPointer(carr)
 
-	go func() {
-		for i := 1; i <= 10; i++ {
-			ch <- i
-		}
-	}()
+	receiveArray(a)
+	fmt.Println("after receiveArray, a = ", a)
 
-	go func() {
-		for v := range ch {
-			fmt.Println(v)
-		}
-	}()
+	fmt.Println(a)
 
-	time.Sleep(3 * time.Second)
+	receiveArrayPointer(&a)
+	fmt.Println("after receiveArrayPointer, a = ", a)
+}
+
+func receiveArray(param [5]int) {
+	fmt.Println("in receiveArray func, before modify, param = ", param)
+	param[1] = -5
+	v := param
+	fmt.Println(v)
+	fmt.Println("in receiveArray func, after modify, param = ", param)
+}
+
+func receiveArrayPointer(param *[5]int) {
+	fmt.Println("in receiveArrayPointer func, before modify, param = ", param)
+	param[1] = -5
+	fmt.Println("in receiveArrayPointer func, after modify, param = ", param)
+}
+
+func printFuncParamPointer(param [5]*Custom) {
+	for i := range param {
+		fmt.Printf("in printFuncParamPointer func, param[%d] = %p, value = %v \n", i, &param[i], *param[i])
+	}
 }
