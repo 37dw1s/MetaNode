@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"GoLearning/task4/internal/config"
 	"GoLearning/task4/internal/database"
 	"GoLearning/task4/internal/models"
 	"net/http"
@@ -59,7 +60,7 @@ func Login(c *gin.Context) {
 		"exp":      time.Now().Add(time.Hour * 24).Unix(),
 	})
 
-	tokenString, err := token.SignedString([]byte("your_secret_key"))
+	tokenString, err := token.SignedString([]byte(config.SecretKey))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
 		return

@@ -16,7 +16,7 @@ func CreateComment(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	postID := c.Param("id")
+	postID := c.Param("post_id")
 	//var post models.Post
 	//if err := database.DB.First(&post, postID).Error; err != nil {
 	//	c.JSON(http.StatusNotFound, gin.H{"error": "post not found"})
@@ -34,7 +34,7 @@ func CreateComment(c *gin.Context) {
 
 func ListComments(c *gin.Context) {
 	var cmts []models.Comment
-	if err := database.DB.Where("post_id = ?", c.Param("id")).Find(&cmts).Order("id DES").Error; err != nil {
+	if err := database.DB.Where("post_id = ?", c.Param("post_id")).Find(&cmts).Order("id DES").Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

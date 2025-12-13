@@ -11,15 +11,15 @@ import (
 func EnsurePostOwner() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		uidAny, _ := c.Get("userID")
-		uid := uidAny.(float64)
+		uid := uint(uidAny.(float64))
 
-		id := c.Param("id")
+		postid := c.Param("post_id")
 		var post models.Post
-		if err := database.DB.First(&post, id).Error; err != nil {
+		if err := database.DB.First(&post, postid).Error; err != nil {
 			c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "post not found"})
 			return
 		}
-		if post.UserID != uint(uid) {
+		if post.UserID != uid {
 			c.AbortWithStatusJSON(http.StatusForbidden, gin.H{"error": "forbidden: not the author"})
 			return
 		}

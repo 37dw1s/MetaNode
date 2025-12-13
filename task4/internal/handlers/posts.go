@@ -65,7 +65,7 @@ func ListPosts(c *gin.Context) {
 
 func GetPost(c *gin.Context) {
 	var post models.Post
-	if err := database.DB.First(&post, c.Param("id")).Error; err != nil {
+	if err := database.DB.First(&post, c.Param("post_id")).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "post not found"})
 		return
 	}
