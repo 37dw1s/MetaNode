@@ -129,8 +129,8 @@ func main() {
 	if err := db.
 		Preload("Posts").
 		Preload("Posts.Comments").
-		First(&u, u1.ID).Error; err != nil {
-		log.Fatal(err)
+		Take(&u).Error; err != nil {
+		panic(err)
 	}
 
 	if err := db.Delete(&u.Posts[0].Comments[0]).Error; err != nil {
